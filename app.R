@@ -18,6 +18,8 @@ library(shinyWidgets)
 
 # Data
 orcid_data <<- read.csv("data/users_orc.csv")
+project_data <<- read.csv("data/project_data.csv")
+task_data <<- read.csv("data/tasks_data.csv")
 
 # Source
 source("toolbars.R")
@@ -100,7 +102,13 @@ server <- function(input, output, session) {
       # )
       
       # save the data
-      write.csv(orcid_data, "data/users_orc.csv", row.names = F)
+      # write.csv(orcid_data, "data/users_orc.csv", row.names = F)
+      
+      show_alert(
+        title = "User Added",
+        text = "rorcid no longer works, so this demo does not create new users.",
+        type = "success"
+      )
       
       # show the new table
       output$orcid_table_update <- renderDT(server = FALSE, {
@@ -124,9 +132,323 @@ server <- function(input, output, session) {
     
   })
   
-  # more functions ----
+  # add projects fake note ----
+  observeEvent(input$save_new_project, {
+    # write.csv(project_data, "data/project_data.csv", row.names = F)
+    show_alert(
+      title = "Demo",
+      text = "This demo does not create new projects.",
+      type = "warning"
+    )
+  })
   
+  # spam tables ----
+  output$spam_project_table <- renderDT(server = FALSE, {
+    
+    datatable(project_data %>% 
+                filter(tab == "spaml") %>% 
+                filter(box == "project"),
+              extensions = 'Buttons',
+              options = list(lengthChange = TRUE,
+                             scrollX = TRUE, 
+                             dom = 'ftBp',
+                             buttons = c('copy', 'csv', 'excel')),
+              rownames = FALSE,
+              editable = TRUE)
+  })
+  
+  output$spam_ethics_table <- renderDT(server = FALSE, {
+    
+    datatable(project_data %>% 
+                filter(tab == "spaml") %>% 
+                filter(box == "ethics"),
+              extensions = 'Buttons',
+              options = list(lengthChange = TRUE,
+                             scrollX = TRUE, 
+                             dom = 'ftBp',
+                             buttons = c('copy', 'csv', 'excel')),
+              rownames = FALSE,
+              editable = TRUE)
+  })
+  
+  output$spam_materials_table <- renderDT(server = FALSE, {
+    
+    datatable(project_data %>% 
+                filter(tab == "spaml") %>% 
+                filter(box == "materials"),
+              extensions = 'Buttons',
+              options = list(lengthChange = TRUE,
+                             scrollX = TRUE, 
+                             dom = 'ftBp',
+                             buttons = c('copy', 'csv', 'excel')),
+              rownames = FALSE,
+              editable = TRUE)
+  })
+  
+  output$spam_prereg_table <- renderDT(server = FALSE, {
+    
+    datatable(project_data %>% 
+                filter(tab == "spaml") %>% 
+                filter(box == "prereg"),
+              extensions = 'Buttons',
+              options = list(lengthChange = TRUE,
+                             scrollX = TRUE, 
+                             dom = 'ftBp',
+                             buttons = c('copy', 'csv', 'excel')),
+              rownames = FALSE,
+              editable = TRUE)
+  })
+  
+  output$spam_analyses_table <- renderDT(server = FALSE, {
+    
+    datatable(project_data %>% 
+                filter(tab == "spaml") %>% 
+                filter(box == "analyses"),
+              extensions = 'Buttons',
+              options = list(lengthChange = TRUE,
+                             scrollX = TRUE, 
+                             dom = 'ftBp',
+                             buttons = c('copy', 'csv', 'excel')),
+              rownames = FALSE,
+              editable = TRUE)
+  })
+  
+  output$spam_manuscript_table <- renderDT(server = FALSE, {
+    
+    datatable(project_data %>% 
+                filter(tab == "spaml") %>% 
+                filter(box == "manuscript"),
+              extensions = 'Buttons',
+              options = list(lengthChange = TRUE,
+                             scrollX = TRUE, 
+                             dom = 'ftBp',
+                             buttons = c('copy', 'csv', 'excel')),
+              rownames = FALSE,
+              editable = TRUE)
+  })
+  
+  output$spam_task_table <- renderDT(server = FALSE, {
+    
+    datatable(task_data %>% 
+                filter(tab == "spaml"),
+              extensions = 'Buttons',
+              options = list(lengthChange = TRUE,
+                             scrollX = TRUE, 
+                             dom = 'ftBp',
+                             buttons = c('copy', 'csv', 'excel')),
+              rownames = FALSE,
+              editable = TRUE)
+  })
+  
+  observeEvent(input$save_spaml, {
+    # write.csv(project_data, "data/project_data.csv", row.names = F)
+    show_alert(
+      title = "Success",
+      text = "SPAML Data Saved\n (data does not save in demo)",
+      type = "success"
+    )
+  })
+  
+  # tod tables ----
+   
+  output$tod_project_table <- renderDT(server = FALSE, {
+    
+    datatable(project_data %>% 
+                filter(tab == "tod") %>% 
+                filter(box == "project"),
+              extensions = 'Buttons',
+              options = list(lengthChange = TRUE,
+                             scrollX = TRUE, 
+                             dom = 'ftBp',
+                             buttons = c('copy', 'csv', 'excel')),
+              rownames = FALSE,
+              editable = TRUE)
+  })
+  
+  output$tod_materials_table <- renderDT(server = FALSE, {
+    
+    datatable(project_data %>% 
+                filter(tab == "tod") %>% 
+                filter(box == "materials"),
+              extensions = 'Buttons',
+              options = list(lengthChange = TRUE,
+                             scrollX = TRUE, 
+                             dom = 'ftBp',
+                             buttons = c('copy', 'csv', 'excel')),
+              rownames = FALSE,
+              editable = TRUE)
+  })
+  
+  output$tod_analyses_table <- renderDT(server = FALSE, {
+    
+    datatable(project_data %>% 
+                filter(tab == "tod") %>% 
+                filter(box == "analyses"),
+              extensions = 'Buttons',
+              options = list(lengthChange = TRUE,
+                             scrollX = TRUE, 
+                             dom = 'ftBp',
+                             buttons = c('copy', 'csv', 'excel')),
+              rownames = FALSE,
+              editable = TRUE)
+  })
+  
+  output$tod_manuscript_table <- renderDT(server = FALSE, {
+    
+    datatable(project_data %>% 
+                filter(tab == "tod") %>% 
+                filter(box == "manuscript"),
+              extensions = 'Buttons',
+              options = list(lengthChange = TRUE,
+                             scrollX = TRUE, 
+                             dom = 'ftBp',
+                             buttons = c('copy', 'csv', 'excel')),
+              rownames = FALSE,
+              editable = TRUE)
+  })
+  
+  output$tod_task_table <- renderDT(server = FALSE, {
+    
+    datatable(task_data %>% 
+                filter(tab == "tod"),
+              extensions = 'Buttons',
+              options = list(lengthChange = TRUE,
+                             scrollX = TRUE, 
+                             dom = 'ftBp',
+                             buttons = c('copy', 'csv', 'excel')),
+              rownames = FALSE,
+              editable = TRUE)
+  })
+  
+  observeEvent(input$save_tod, {
+    # write.csv(project_data, "data/project_data.csv", row.names = F)
+    show_alert(
+      title = "Success",
+      text = "Table of Doom Data Saved\n (data does not save in demo)",
+      type = "success"
+    )
+  })
 
+  # task information ----
+  observeEvent(input$save_new_task, {
+    task_data <<- bind_rows(
+      task_data,
+      data.frame(tab = input$add_project_task, 
+                 person = input$add_user_task, 
+                 Task = input$add_info_task)
+    )
+    
+    write.csv(task_data, "data/tasks_data.csv", row.names = F)
+    show_alert(
+      title = "Success",
+      text = "New Task Added",
+      type = "success"
+    )
+  })
+  
+  output$current_task_table <- renderDT(server = FALSE, {
+    
+    datatable(task_data,
+              extensions = 'Buttons',
+              options = list(lengthChange = TRUE,
+                             scrollX = TRUE, 
+                             dom = 'ftBp',
+                             buttons = c('copy', 'csv', 'excel')),
+              rownames = FALSE,
+              editable = TRUE)
+  })
+  
+  observeEvent(input$current_task_table_cell_edit, {
+    row  <- input$current_task_table_cell_edit$row
+    clmn <- input$current_task_table_cell_edit$col+1
+    task_data[row, clmn] <<- input$current_task_table_cell_edit$value
+  })
+  
+  observeEvent(input$edit_tasks, {
+
+    write.csv(task_data, "data/tasks_data.csv", row.names = F)
+    show_alert(
+      title = "Success",
+      text = "Tasks Edited",
+      type = "success"
+    )
+  })
+  
+  # credit information ----
+  output$spam_credit_table <- renderDT(server = FALSE, {
+    
+    temp <- project_data %>% 
+      filter(tab == "spaml") %>% 
+      left_join(
+        orcid_data, by = c("Creator" = "ORCID")
+      )
+    
+    datatable(temp,
+              extensions = 'Buttons',
+              options = list(lengthChange = TRUE,
+                             scrollX = TRUE, 
+                             dom = 'ftBp',
+                             buttons = c('copy', 'csv', 'excel')),
+              rownames = FALSE,
+              editable = FALSE)
+  })
+  
+  output$tod_credit_table <- renderDT(server = FALSE, {
+    
+    temp <- project_data %>% 
+      filter(tab == "tod") %>% 
+      left_join(
+        orcid_data, by = c("Creator" = "ORCID")
+      )
+    
+    datatable(temp,
+              extensions = 'Buttons',
+              options = list(lengthChange = TRUE,
+                             scrollX = TRUE, 
+                             dom = 'ftBp',
+                             buttons = c('copy', 'csv', 'excel')),
+              rownames = FALSE,
+              editable = FALSE)
+  })
+  
+  observeEvent(input$spaml_credit_ten, {
+    
+    show_alert(
+      title = "Success",
+      text = "Download tenzing table (demo does not create table)",
+      type = "success"
+    )
+  })
+  
+  observeEvent(input$spaml_yaml, {
+    
+    show_alert(
+      title = "Success",
+      text = "Download yaml (demo does not create yaml)",
+      type = "success"
+    )
+  })
+  
+  observeEvent(input$tod_credit_ten, {
+    
+    show_alert(
+      title = "Success",
+      text = "Download tenzing table (demo does not create table)",
+      type = "success"
+    )
+  })
+  
+  observeEvent(input$tod_yaml, {
+    
+    show_alert(
+      title = "Success",
+      text = "Download yaml (demo does not create yaml)",
+      type = "success"
+    )
+  })
+  
+  
+  
   
 }
 
